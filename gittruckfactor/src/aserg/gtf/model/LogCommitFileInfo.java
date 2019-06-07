@@ -35,6 +35,11 @@ public class LogCommitFileInfo extends AbstractEntity{
 	@Enumerated(EnumType.STRING)
 	private Status status;
 
+	private Integer fileSize;
+	private Integer modificationSize;
+	private Integer ciclomaticComplexity;
+
+
 	public LogCommitFileInfo() {
 		// TODO Auto-generated constructor stub
 	}
@@ -50,6 +55,24 @@ public class LogCommitFileInfo extends AbstractEntity{
 		this.newFileName = newFileName;
 		this.status = Status.getStatus(status);
 		this.setTempId(count++);
+	}
+
+
+	public LogCommitFileInfo(LogCommitInfo commitInfo, String status, String oldFileName, String newFileName, Integer fileSize, Integer modificationSize, Integer ciclomaticComplexity) {
+		super();
+		this.commitInfo = commitInfo;
+		this.repositoryName = commitInfo.getRepositoryName();
+		this.oldFileName = oldFileName;
+		this.newFileName = newFileName;
+
+		this.status = Status.getStatus(status);
+
+		this.setTempId(count++);
+
+		this.ciclomaticComplexity=ciclomaticComplexity;
+		this.modificationSize = modificationSize;
+		this.fileSize = fileSize;
+
 	}
 	
 	@Override

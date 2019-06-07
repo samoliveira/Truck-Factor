@@ -116,7 +116,10 @@ public class GitLogExtractor extends AbstractTask<Map<String, LogCommitInfo>>{
 			String sha = values[0];
 			if (mapCommit.containsKey(sha)){
 				LogCommitInfo commit = mapCommit.get(sha);
-				commit.addCommitFile(new LogCommitFileInfo(commit, values[1], values[2], values[3]));
+				// New columns in commitfileinfo = size, size of modifications, ciclomatic complexity
+				commit.addCommitFile(new LogCommitFileInfo(commit, values[1], values[2], values[3]),
+						Integer.parseInt(values[4]), Integer.parseInt(values[5]), Integer.parseInt(values[6]))
+				//commit.addCommitFile(new LogCommitFileInfo(commit, values[1], values[2], values[3]));
 			}
 			else
 				System.err.println("Ignoring file " + values[3] + " Sha: "+sha);
