@@ -39,6 +39,32 @@ public class LogCommitFileInfo extends AbstractEntity{
 	private Integer modificationSize;
 	private Integer ciclomaticComplexity;
 
+	public Integer getFileSize() {
+		return fileSize;
+	}
+
+	public void setFileSize(Integer fileSize) {
+		this.fileSize = fileSize;
+	}
+
+	public Integer getModificationSize() {
+		return modificationSize;
+	}
+
+	public void setModificationSize(Integer modificationSize) {
+		this.modificationSize = modificationSize;
+	}
+
+	public Integer getCiclomaticComplexity() {
+		return ciclomaticComplexity;
+	}
+
+	public void setCiclomaticComplexity(Integer ciclomaticComplexity) {
+		this.ciclomaticComplexity = ciclomaticComplexity;
+	}
+
+
+
 
 	public LogCommitFileInfo() {
 		// TODO Auto-generated constructor stub

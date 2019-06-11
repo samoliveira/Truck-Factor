@@ -111,6 +111,8 @@ public class DOACalculator extends AbstractTask<Repository>{
 					LOGGER.debug(debugStr);
 					authorshipInfo.setAsSecondaryAuthor();
 					authorshipInfo.addNewAddDelivery();
+
+
 				}
 				else{ //Treat as delivery if the extra add was made by the first author 
 					authorshipInfo.addNewAddDelivery();
@@ -120,12 +122,17 @@ public class DOACalculator extends AbstractTask<Repository>{
 			}
 			else if (status == Status.MODIFIED){
 				authorshipInfo.addNewDelivery();
+
+				authorshipInfo.addWeightedDelivery(commitFile.getFileSize(),
+						commitFile.getModificationSize(), commitFile.getCiclomaticComplexity());
 				//file.addNewChange();					
 			}
 			else if (status == Status.RENAMED_TREATED){
 				// Considering a rename as a new delivery
 				authorshipInfo.addNewDelivery();
-				//file.addNewChange();		
+				authorshipInfo.addWeightedDelivery(commitFile.getFileSize(),
+						commitFile.getModificationSize(), commitFile.getCiclomaticComplexity());
+				//file.addNewChange();
 			}
 			else System.err.println("Invalid Status: "+ status);
 		}

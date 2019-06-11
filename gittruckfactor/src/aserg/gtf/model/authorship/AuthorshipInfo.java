@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import java.lang.Math;
 
 import aserg.gtf.GitTruckFactor;
 
@@ -20,7 +21,7 @@ public class AuthorshipInfo implements Comparable<AuthorshipInfo>{
 	private Developer developer;
 	private boolean firstAuthor;
 	private boolean secondaryAuthor;
-	private int nDeliveries;
+	private double nDeliveries;
 	private int nAddDeliveries;
 	private double doa;
 	private double doaMultAuthor;
@@ -88,7 +89,12 @@ public class AuthorshipInfo implements Comparable<AuthorshipInfo>{
 		this.nDeliveries++;
 		this.file.addNewChange();
 	}
-	
+
+	public void addWeightedDelivery(int size, int modSize, int complexity){
+		this.nDeliveries = Math.max(Math.log(size), 0) +
+				Math.max(Math.log(modSize), 0) + Math.max(Math.log(complexity), 0);
+	}
+
 	public void addNewAddDelivery(){
 		this.nAddDeliveries++;
 		this.file.addExtraAdds();
@@ -117,17 +123,17 @@ public class AuthorshipInfo implements Comparable<AuthorshipInfo>{
 	public void setFirstAuthor(boolean firstAdd) {
 		this.firstAuthor = firstAdd;
 	}
-	public int getnDeliveries() {
+	public double getnDeliveries() {
 		return nDeliveries;
 	}
-	public void setnDeliveries(int nDeliveries) {
+	public void setnDeliveries(double nDeliveries) {
 		this.nDeliveries = nDeliveries;
 	}
 	public int getnAcceptances() {
-		return this.file.getnChanges() - this.nDeliveries;
+		return this.file.getnChanges() - (int)this.nDeliveries;
 	}
 	public int getnAcceptancesWithAdds() {
-		return this.file.getnChanges() + this.file.getnExtraAdds() - this.nDeliveries - this.nAddDeliveries;
+		return this.file.getnChanges() + this.file.getnExtraAdds() - (int)this.nDeliveries - this.nAddDeliveries;
 	}
 
 
