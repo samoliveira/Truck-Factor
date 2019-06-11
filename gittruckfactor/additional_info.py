@@ -31,6 +31,21 @@ def main(ANALYZED_REPO, COMMIT_FILE_INFO_LOG):
                 with open ("additional_info.log", "a") as f_i:
                     print(line.split("\n")[0]+";"+str(loc)+";"+str(mod)+";"+str(cyc))
                     print(line.split("\n")[0]+";"+str(loc)+";"+str(mod)+";"+str(cyc), file=f_i)
+            else:
+                actual_commit = commit_sha
+                #repo.git.checkout(actual_commit)
+                i = lizard.analyze_file(ANALYZED_REPO+filepath)
+
+                loc = i.__dict__['nloc']
+
+                cyc = 0
+                for f in i.function_list:
+                    #print(f.__dict__['cyclomatic_complexity'])
+                    cyc = cyc + f.__dict__['cyclomatic_complexity']
+                mod = repo.commit(actual_commit).stats.total['lines']
+                with open ("additional_info.log", "a") as f_i:
+                    print(line.split("\n")[0]+";"+str(loc)+";"+str(mod)+";"+str(cyc))
+                    print(line.split("\n")[0]+";"+str(loc)+";"+str(mod)+";"+str(cyc), file=f_i)
 
     repo.git.checkout(all_commits[0])
 
