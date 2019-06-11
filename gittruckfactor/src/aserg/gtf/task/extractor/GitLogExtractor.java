@@ -107,7 +107,7 @@ public class GitLogExtractor extends AbstractTask<Map<String, LogCommitInfo>>{
 	
 	private void insertFiles(String projectName, Map<String, LogCommitInfo> mapCommit) throws IOException{
 		LOGGER.info(projectName+": Extracting logCommitFiles...");
-		BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(repositoryPath+"commitfileinfo.log"), "UTF8"));
+		BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(repositoryPath+"additional_info.log"), "UTF8"));
 		String sCurrentLine;
 		String[] values;
 
@@ -117,8 +117,8 @@ public class GitLogExtractor extends AbstractTask<Map<String, LogCommitInfo>>{
 			if (mapCommit.containsKey(sha)){
 				LogCommitInfo commit = mapCommit.get(sha);
 				// New columns in commitfileinfo = size, size of modifications, ciclomatic complexity
-				commit.addCommitFile(new LogCommitFileInfo(commit, values[1], values[2], values[3]),
-						Integer.parseInt(values[4]), Integer.parseInt(values[5]), Integer.parseInt(values[6]))
+				commit.addCommitFile(new LogCommitFileInfo(commit, values[1], values[2], values[3],
+						Integer.parseInt(values[4]), Integer.parseInt(values[5]), Integer.parseInt(values[6])))
 				//commit.addCommitFile(new LogCommitFileInfo(commit, values[1], values[2], values[3]));
 			}
 			else
